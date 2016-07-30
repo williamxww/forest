@@ -12,6 +12,7 @@ public class ProviderStart {
                 "META-INF/spring/dubbo-service-provider.xml"
         });
         context.start();
-        System.in.read();
+
+        System.in.read();//test git
     }
 }
