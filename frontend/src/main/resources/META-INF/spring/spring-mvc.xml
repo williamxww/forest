@@ -32,4 +32,14 @@
 		</property>
 	</bean>
 
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean>
+
+	<!-- 拦截器 -->
+	<mvc:interceptors>
+		<bean id="licenseWatchInterceptor" class="com.bow.forest.frontend.common.interceptor.LicenseWatchInterceptor"/>
+	</mvc:interceptors>
+
 </beans>

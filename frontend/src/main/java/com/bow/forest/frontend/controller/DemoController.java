@@ -20,6 +20,12 @@ import java.util.Date;
 @RestController
 public class DemoController {
 
+
+    @RequestMapping("/forward/{jspName}")
+    public String forward(@PathVariable String jspName){
+        return "demo/"+jspName;
+    }
+
     @RequestMapping("/getUser/{name}")
     public User getUser(@PathVariable String name){
         User u = new User();

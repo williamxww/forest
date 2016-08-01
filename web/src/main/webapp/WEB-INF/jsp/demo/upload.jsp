@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <body>
-<form method="POST" enctype="multipart/form-data" action="../upload">
+<form method="POST" enctype="multipart/form-data" action="upload">
     <input type="file" name="file"><br />
     <input type="submit" value="Upload">
 </form>
