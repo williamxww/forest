@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <beans xmlns="http://www.springframework.org/schema/beans" 
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+ xmlns:aop="http://www.springframework.org/schema/aop"
+ xsi:schemaLocation="http://www.springframework.org/schema/beans  http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+">
+	<bean id="proxy" class="org.springframework.aop.framework.ProxyFactoryBean">  
+  
+        <!--这里代理的是接口-->  
+        <property name="proxyInterfaces" value="spring.aop.UserService" />
+  
+        <!--是ProxyFactoryBean要代理的目标类-->  
+        <property name="target" ref="userServiceImpl" /> 
+  
+        <!--程序中的Advice-->  
+        <property name="interceptorNames">  
+            <list>  
+                <value>logAdvisor</value>  
+            </list>  
+        </property>  
+    </bean>
+    
+    
+    <!--代理目标类的指定方法-->  
+	<bean id="logAdvisor" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">  
+        <property name="advice" ref="logAdvice" />
+        <!-- 支持正则表达式如  .*add.*  所有方法名中包含add的方法  -->
+        <property name="patterns" value="addUser" />
+    </bean>
+    
+    <bean id="logAdvice" class="spring.aop.LogAdvice" />
+    
+    <bean id="userServiceImpl" class="spring.aop.UserServiceImpl" />
+    
+    
+    
+    <bean id="salaryService" class="spring.aop.SalaryService" />
+    <aop:config>
+	    <aop:pointcut id="pointcut" expression="execution (* spring.aop.SalaryService.*(..))"/>
+	    <aop:aspect ref="aspect">
+	        <aop:around method="handleAround" pointcut-ref="pointcut"/>
+	        <!-- 
+	        <aop:before method="before" pointcut-ref="pointcut"/>
+	        <aop:after-returning method="afterReturning" pointcut-ref="pointcut" returning="retVal"/>
+	        <aop:after method="afterAdvice" pointcut-ref="pointcut"/>
+	        <aop:after-throwing method="afterThrowing" arg-names="ex" throwing="ex" pointcut-ref="pointcut" />
+	   		 -->
+	    </aop:aspect>
+	</aop:config>
+	 
+	<bean id="aspect" class="spring.aop.DemoAspect"/>
+	
+	
+	<!-- annotation aop config -->
+	 <aop:aspectj-autoproxy/>
+	 <bean id="annotationAspectService" class="spring.aop.AnnotationAspectService"/>
+	 <bean id="annotationAspect" class="spring.aop.AnnotationAspect"/>
+	
+	
+</beans>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <beans xmlns="http://www.springframework.org/schema/beans" 
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+ xmlns:hill="http://bow.com/schema/hill" 
+ xsi:schemaLocation="http://www.springframework.org/schema/beans 
+ http://www.springframework.org/schema/beans/spring-beans.xsd
+ http://bow.com/schema/hill  http://bow.com/schema/hill/hill.xsd
+">
+
+	<hill:application id="app1" name="vv" version="v1"></hill:application>
+ </beans>

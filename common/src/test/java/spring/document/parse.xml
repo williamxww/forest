@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <beans xmlns="http://www.springframework.org/schema/beans" 
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+ xsi:schemaLocation="http://www.springframework.org/schema/beans 
+ http://www.springframework.org/schema/beans/spring-beans.xsd
+">
+<!-- 利用PropertyPlaceholderConfigurer回调处理器  替换从属性文件中加载属性的值，
+只要值符合某种格式规则，默认情况下是${property-name}，就会发生替换。
+-->
+	<bean id="bfpp" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="classpath:spring/beanFactoryPostProcessor/bfpp.properties"></property>
+	</bean>
+	
+	<bean id="simpleBean" class="spring.beanFactoryPostProcessor.SimpleBean">
+		<property name="connectionString" value="${simpleBean.connectionString}"/>
+		<property name="password" value="${simpleBean.password}"/>
+		<property name="username" value="${simpleBean.username}"/>
+	</bean>
+	
+	<!-- 下面配置为了测试自定义postProcessor 过滤敏感词汇 -->
+	<bean id="obscenePostProcessor" class="spring.beanFactoryPostProcessor.ObscenityRemovingBeanFactoryPostProcessor">  
+	   <property name="obscenties">  
+	       <set>  
+	           <value>obsceneWord</value>  
+	           <value>winky</value>  
+	           <value>bum</value>  
+	       </set>  
+	   </property> 
+	</bean>
+	
+	<bean id="sensltiveBean" class="spring.beanFactoryPostProcessor.SimpleBean">
+		<property name="connectionString" value="obsceneWord"/>
+		<property name="password" value="apple"/>
+		<property name="username" value="Microsoft"/>
+	</bean>
+	
+   
+ </beans>

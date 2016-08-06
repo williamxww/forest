@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <beans xmlns="http://www.springframework.org/schema/beans" 
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+ xsi:schemaLocation="http://www.springframework.org/schema/beans 
+ http://www.springframework.org/schema/beans/spring-beans.xsd
+">
+
+<!-- 这里给employee (Person类型) 注入的字符串  -->
+	<bean id="sample" class="spring.property.Company">
+	    <property name="employee" value="vv"/>
+	</bean>
+
+	<bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+	    <property name="propertyEditorRegistrars">
+	        <list>
+	            <ref bean="personPropertyEditorRegistrar"/>
+	        </list>
+	    </property>
+	</bean>
+	 
+	<bean id="personPropertyEditorRegistrar" class="spring.property.PersonPropertyEditorRegistrar"/>
+
+     
+ </beans>
