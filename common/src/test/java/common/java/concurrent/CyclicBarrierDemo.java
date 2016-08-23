@@ -51,5 +51,6 @@ public class CyclicBarrierDemo {
     public static void main(String[] args) {
         CyclicBarrierDemo demo = new CyclicBarrierDemo();
         demo.withRunnable();
+        System.out.println("end");
     }
 }
