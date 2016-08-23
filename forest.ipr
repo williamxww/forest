@@ -139,6 +139,11 @@
     </bytecodeTargetLevel>
   </component>
   <component name="CopyrightManager" default="" />
+  <component name="EclipseCodeFormatter">
+    <option name="defaultSettings" value="true" />
+    <option name="id" value="1470578691402" />
+    <option name="name" value="default" />
+  </component>
   <component name="EntryPointsManager">
     <entry_points version="2.0" />
   </component>
@@ -396,6 +401,17 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://D:/CFile/apache-maven-3.3.9/.m2/repository/com/google/guava/guava/16.0.1/guava-16.0.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: com.huawei.itpaas:com.huawei.itpaas.dsf:1.1.00.SPC200">
+      <CLASSES>
+        <root url="jar://D:/CFile/apache-maven-3.3.9/.m2/repository/com/huawei/itpaas/com.huawei.itpaas.dsf/1.1.00.SPC200/com.huawei.itpaas.dsf-1.1.00.SPC200.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://D:/CFile/apache-maven-3.3.9/.m2/repository/com/huawei/itpaas/com.huawei.itpaas.dsf/1.1.00.SPC200/com.huawei.itpaas.dsf-1.1.00.SPC200-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://D:/CFile/apache-maven-3.3.9/.m2/repository/com/huawei/itpaas/com.huawei.itpaas.dsf/1.1.00.SPC200/com.huawei.itpaas.dsf-1.1.00.SPC200-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: commons-codec:commons-codec:1.6">
