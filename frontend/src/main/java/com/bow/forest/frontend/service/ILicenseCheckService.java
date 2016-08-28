@@ -1,7 +1,6 @@
 package com.bow.forest.frontend.service;
 
-import com.bow.forest.frontend.common.enums.LicenseStatus;
-import com.bow.forest.frontend.entity.LicenseItem;
+import com.bow.forest.frontend.common.constant.LicenseStatus;
 
 /**
  * Created by vv on 2016/8/1.

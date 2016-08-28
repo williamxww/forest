@@ -8,8 +8,7 @@ package spring.property;
 
 /** 
  * @ClassName: Person 
- * @Description: TODO(describe in one sentence) 
- * @author ViVi 
+ * @author ViVi
  * @date 2015年8月26日 下午8:17:35  
  */
 
@@ -49,4 +48,11 @@ public class Person {
         this.age = age;
     }
 
+    @Override
+    public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                '}';
+    }
 }

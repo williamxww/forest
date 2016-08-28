@@ -1,6 +1,6 @@
 package com.bow.forest.frontend.common.interceptor;
 
-import com.bow.forest.frontend.common.enums.LicenseStatus;
+import com.bow.forest.frontend.common.constant.LicenseStatus;
 import com.bow.forest.frontend.service.ILicenseCheckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;

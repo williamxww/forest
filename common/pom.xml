@@ -53,4 +53,13 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <!-- 将src/test/java当成资源文件夹后，编译时才会从其下查找资源文件 -->
+        <resources>
+            <resource>
+                <directory>src/test/java</directory>
+            </resource>
+        </resources>
+    </build>
+
 </project>

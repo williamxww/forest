@@ -12,8 +12,7 @@ import org.springframework.validation.Validator;
 
 /** 
  * @ClassName: PersonValidator 
- * @Description: TODO(describe in one sentence) 
- * @author ViVi 
+ * @author ViVi
  * @date 2015年8月26日 下午8:18:26  
  */
 

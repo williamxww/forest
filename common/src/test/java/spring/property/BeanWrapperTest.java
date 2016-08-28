@@ -1,23 +1,22 @@
-/**  
- * @FileName: BeanWrapperTest.java 
- * @Package spring.property 
+/**
+ * @FileName: BeanWrapperTest.java
+ * @Package spring.property
  * all rights reserved by Hill team
- * @version v1.3  
- */ 
+ * @version v1.3
+ */
 package spring.property;
 
 import org.junit.Test;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
+import org.springframework.beans.PropertyAccessorFactory;
 import org.springframework.beans.PropertyValue;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-/** 
- * @ClassName: BeanWrapperTest 
- * @Description: TODO(describe in one sentence) 
- * @author ViVi 
- * @date 2015年8月26日 下午8:30:24  
+/**
+ * @author ViVi
+ * @date 2015年8月26日 下午8:30:24
  */
 
 public class BeanWrapperTest {
@@ -44,18 +43,29 @@ public class BeanWrapperTest {
     }
 
     /**
-     * 
-     * @Description: xml中给Company的employee注入的是
-     *               字符串，通过propertyEditor转换成Person对象然后注入
-     * 
-     *               注意：在此过程中是通过PropertyEditorRegistrar进行editor注册的
+     * another way to build BeanWrapper
+     */
+    @Test
+    public void testBeanWrapper2() {
+        Person p = new Person();
+        BeanWrapper vv = PropertyAccessorFactory.forBeanPropertyAccess(p);
+        vv.setPropertyValue("name", "vv5");
+        PropertyValue pv = new PropertyValue("age", 26);
+        vv.setPropertyValue(pv);
+        System.out.println(p.toString());
+    }
+
+    /**
+     * xml中给Company的employee注入的是字符串，通过propertyEditor转换成Person对象然后注入
+     * 注意：在此过程中是通过PropertyEditorRegistrar进行editor注册的
      */
     @Test
     public void testPropertyEditor() {
         ApplicationContext context = new ClassPathXmlApplicationContext(
-                new String[] { "spring/property/applicationContext-property.xml" });
+                new String[]{"spring/property/applicationContext-property.xml"});
         Company company = (Company) context.getBean("sample");
         System.out.println(company.getEmployee().getName());
     }
+
 
 }

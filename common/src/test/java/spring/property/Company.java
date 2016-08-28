@@ -8,8 +8,7 @@ package spring.property;
 
 /** 
  * @ClassName: Company 
- * @Description: TODO(describe in one sentence) 
- * @author ViVi 
+ * @author ViVi
  * @date 2015年8月26日 下午8:29:00  
  */
 

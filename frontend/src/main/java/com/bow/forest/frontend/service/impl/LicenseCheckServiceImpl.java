@@ -1,6 +1,6 @@
 package com.bow.forest.frontend.service.impl;
 
-import com.bow.forest.frontend.common.enums.LicenseStatus;
+import com.bow.forest.frontend.common.constant.LicenseStatus;
 import com.bow.forest.frontend.entity.LicenseItem;
 import com.bow.forest.frontend.service.ILicenseCheckService;
 import org.slf4j.Logger;
@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
