@@ -147,6 +147,19 @@
                 <artifactId>commons-fileupload</artifactId>
                 <version>${commons-fileupload_version}</version>
             </dependency>
+
+            <!-- mongo -->
+            <dependency>
+                <groupId>org.mongodb</groupId>
+                <artifactId>mongo-java-driver</artifactId>
+                <version>3.2.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-mongodb</artifactId>
+                <version>1.8.0.RELEASE</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

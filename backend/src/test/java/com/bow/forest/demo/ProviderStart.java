@@ -1,6 +1,5 @@
 package com.bow.forest.demo;
 
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
@@ -9,7 +8,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class ProviderStart {
     public static void main(String[] args) throws Exception {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(new String[]{
-                "META-INF/spring/dubbo-service-provider.xml"
+                "config/dubbo-service-provider.xml"
         });
         context.start();
 
