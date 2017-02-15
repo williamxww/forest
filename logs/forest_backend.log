@@ -1,0 +1,40 @@
+DEBUG 2017-01-22 23:13:43 cluster-ClusterId{value='5884cc1ade6e102c5cfd21e4', description='null'}-127.0.0.1:27017 org.mongodb.driver.connection Closing connection connectionId{localValue:25}
+DEBUG 2017-01-22 23:13:44 cluster-ClusterId{value='5884cc1ade6e102c5cfd21e4', description='null'}-127.0.0.1:27017 org.mongodb.driver.connection Closing connection connectionId{localValue:26}
+DEBUG 2017-01-22 23:13:44 cluster-ClusterId{value='5884cc1ade6e102c5cfd21e4', description='null'}-127.0.0.1:27017 org.mongodb.driver.connection Closing connection connectionId{localValue:27}
+DEBUG 2017-01-22 23:13:45 cluster-ClusterId{value='5884cc1ade6e102c5cfd21e4', description='null'}-127.0.0.1:27017 org.mongodb.driver.connection Closing connection connectionId{localValue:28}
+DEBUG 2017-01-22 23:13:45 cluster-ClusterId{value='5884cc1ade6e102c5cfd21e4', description='null'}-127.0.0.1:27017 org.mongodb.driver.connection Closing connection connectionId{localValue:29}
+DEBUG 2017-01-22 23:13:46 cluster-ClusterId{value='5884cc1ade6e102c5cfd21e4', description='null'}-127.0.0.1:27017 org.mongodb.driver.connection Closing connection connectionId{localValue:30}
+DEBUG 2017-01-22 23:13:46 cluster-ClusterId{value='5884cc1ade6e102c5cfd21e4', description='null'}-127.0.0.1:27017 org.mongodb.driver.connection Closing connection connectionId{localValue:31}
+DEBUG 2017-01-22 23:13:47 cluster-ClusterId{value='5884cc1ade6e102c5cfd21e4', description='null'}-127.0.0.1:27017 org.mongodb.driver.connection Closing connection connectionId{localValue:32}
+DEBUG 2017-01-22 23:13:47 cluster-ClusterId{value='5884cc1ade6e102c5cfd21e4', description='null'}-127.0.0.1:27017 org.mongodb.driver.connection Closing connection connectionId{localValue:33}
+DEBUG 2017-01-22 23:13:48 cluster-ClusterId{value='5884cc1ade6e102c5cfd21e4', description='null'}-127.0.0.1:27017 org.mongodb.driver.connection Closing connection connectionId{localValue:34}
+INFO  2017-01-22 23:15:42 main com.bow.forest.backend.dao.mongo.MongoApp test
+INFO  2017-01-22 23:15:44 main org.mongodb.driver.cluster Cluster created with settings {hosts=[127.0.0.1:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
+DEBUG 2017-01-22 23:15:44 main org.mongodb.driver.cluster Updating cluster description to  {type=UNKNOWN, servers=[{address=127.0.0.1:27017, type=UNKNOWN, state=CONNECTING}]
+INFO  2017-01-22 23:15:45 main org.mongodb.driver.cluster No server chosen by WritableServerSelector from cluster description ClusterDescription{type=UNKNOWN, connectionMode=SINGLE, all=[ServerDescription{address=127.0.0.1:27017, type=UNKNOWN, state=CONNECTING}]}. Waiting for 30000 ms before timing out
+INFO  2017-01-22 23:15:45 cluster-ClusterId{value='5884cca0de6e103d948a34a0', description='null'}-127.0.0.1:27017 org.mongodb.driver.connection Opened connection [connectionId{localValue:1, serverValue:57}] to 127.0.0.1:27017
+DEBUG 2017-01-22 23:15:45 cluster-ClusterId{value='5884cca0de6e103d948a34a0', description='null'}-127.0.0.1:27017 org.mongodb.driver.cluster Checking status of 127.0.0.1:27017
+INFO  2017-01-22 23:15:45 cluster-ClusterId{value='5884cca0de6e103d948a34a0', description='null'}-127.0.0.1:27017 org.mongodb.driver.cluster Monitor thread successfully connected to server with description ServerDescription{address=127.0.0.1:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[3, 2, 8]}, minWireVersion=0, maxWireVersion=4, maxDocumentSize=16777216, roundTripTimeNanos=1237749}
+DEBUG 2017-01-22 23:15:45 cluster-ClusterId{value='5884cca0de6e103d948a34a0', description='null'}-127.0.0.1:27017 org.mongodb.driver.cluster Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.2 ms, state=CONNECTED}]
+INFO  2017-01-22 23:15:45 main org.mongodb.driver.connection Opened connection [connectionId{localValue:2, serverValue:58}] to 127.0.0.1:27017
+DEBUG 2017-01-22 23:15:45 main org.mongodb.driver.protocol.insert Inserting 1 documents into namespace test.person on connection [connectionId{localValue:2, serverValue:58}] to server 127.0.0.1:27017
+DEBUG 2017-01-22 23:15:46 main org.mongodb.driver.protocol.insert Insert completed
+DEBUG 2017-01-22 23:15:46 main org.mongodb.driver.protocol.command Sending command {find : BsonString{value='person'}} to database test on connection [connectionId{localValue:2, serverValue:58}] to server 127.0.0.1:27017
+DEBUG 2017-01-22 23:15:46 main org.mongodb.driver.protocol.command Command execution completed
+INFO  2017-01-22 23:15:46 main com.bow.forest.backend.dao.mongo.MongoApp 34
+DEBUG 2017-01-22 23:15:46 main org.mongodb.driver.protocol.command Sending command {drop : BsonString{value='person'}} to database test on connection [connectionId{localValue:2, serverValue:58}] to server 127.0.0.1:27017
+DEBUG 2017-01-22 23:15:46 main org.mongodb.driver.protocol.command Command execution completed
+INFO  2017-01-22 23:16:15 main com.bow.forest.backend.dao.mongo.MongoApp test
+INFO  2017-01-22 23:16:16 main org.mongodb.driver.cluster Cluster created with settings {hosts=[127.0.0.1:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
+DEBUG 2017-01-22 23:16:16 main org.mongodb.driver.cluster Updating cluster description to  {type=UNKNOWN, servers=[{address=127.0.0.1:27017, type=UNKNOWN, state=CONNECTING}]
+INFO  2017-01-22 23:16:17 main org.mongodb.driver.cluster No server chosen by WritableServerSelector from cluster description ClusterDescription{type=UNKNOWN, connectionMode=SINGLE, all=[ServerDescription{address=127.0.0.1:27017, type=UNKNOWN, state=CONNECTING}]}. Waiting for 30000 ms before timing out
+INFO  2017-01-22 23:16:18 cluster-ClusterId{value='5884ccc0de6e102258deecb4', description='null'}-127.0.0.1:27017 org.mongodb.driver.connection Opened connection [connectionId{localValue:1, serverValue:59}] to 127.0.0.1:27017
+DEBUG 2017-01-22 23:16:18 cluster-ClusterId{value='5884ccc0de6e102258deecb4', description='null'}-127.0.0.1:27017 org.mongodb.driver.cluster Checking status of 127.0.0.1:27017
+INFO  2017-01-22 23:16:18 cluster-ClusterId{value='5884ccc0de6e102258deecb4', description='null'}-127.0.0.1:27017 org.mongodb.driver.cluster Monitor thread successfully connected to server with description ServerDescription{address=127.0.0.1:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[3, 2, 8]}, minWireVersion=0, maxWireVersion=4, maxDocumentSize=16777216, roundTripTimeNanos=1617489}
+DEBUG 2017-01-22 23:16:18 cluster-ClusterId{value='5884ccc0de6e102258deecb4', description='null'}-127.0.0.1:27017 org.mongodb.driver.cluster Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.6 ms, state=CONNECTED}]
+INFO  2017-01-22 23:16:18 main org.mongodb.driver.connection Opened connection [connectionId{localValue:2, serverValue:60}] to 127.0.0.1:27017
+DEBUG 2017-01-22 23:16:18 main org.mongodb.driver.protocol.insert Inserting 1 documents into namespace test.person on connection [connectionId{localValue:2, serverValue:60}] to server 127.0.0.1:27017
+DEBUG 2017-01-22 23:16:18 main org.mongodb.driver.protocol.insert Insert completed
+DEBUG 2017-01-22 23:16:18 main org.mongodb.driver.protocol.command Sending command {find : BsonString{value='person'}} to database test on connection [connectionId{localValue:2, serverValue:60}] to server 127.0.0.1:27017
+DEBUG 2017-01-22 23:16:18 main org.mongodb.driver.protocol.command Command execution completed
+INFO  2017-01-22 23:16:18 main com.bow.forest.backend.dao.mongo.MongoApp 34

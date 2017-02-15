@@ -1,4 +1,4 @@
-package com.bow.forest.backend.serviceimpl;
+package com.bow.forest.backend.service;
 
 import com.bow.forest.common.service.IDemoService;
 import org.springframework.stereotype.Service;

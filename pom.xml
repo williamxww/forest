@@ -148,6 +148,14 @@
                 <version>${commons-fileupload_version}</version>
             </dependency>
 
+            <!-- https://mvnrepository.com/artifact/com.zeroc/ice -->
+            <dependency>
+                <groupId>com.zeroc</groupId>
+                <artifactId>ice</artifactId>
+                <version>3.6.3</version>
+            </dependency>
+
+
             <!-- mongo -->
             <dependency>
                 <groupId>org.mongodb</groupId>

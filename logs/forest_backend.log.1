@@ -1,0 +1,54 @@
+INFO  2017-01-22 22:58:39 main com.bow.forest.backend.dao.mongo.MongoApp test
+INFO  2017-01-22 22:58:41 main org.mongodb.driver.cluster Cluster created with settings {hosts=[127.0.0.1:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
+DEBUG 2017-01-22 22:58:42 main org.mongodb.driver.cluster Updating cluster description to  {type=UNKNOWN, servers=[{address=127.0.0.1:27017, type=UNKNOWN, state=CONNECTING}]
+INFO  2017-01-22 22:58:43 main org.mongodb.driver.cluster No server chosen by WritableServerSelector from cluster description ClusterDescription{type=UNKNOWN, connectionMode=SINGLE, all=[ServerDescription{address=127.0.0.1:27017, type=UNKNOWN, state=CONNECTING}]}. Waiting for 30000 ms before timing out
+INFO  2017-01-22 22:58:44 cluster-ClusterId{value='5884c8a1de6e1020ac4b9e43', description='null'}-127.0.0.1:27017 org.mongodb.driver.connection Opened connection [connectionId{localValue:1, serverValue:10}] to 127.0.0.1:27017
+DEBUG 2017-01-22 22:58:44 cluster-ClusterId{value='5884c8a1de6e1020ac4b9e43', description='null'}-127.0.0.1:27017 org.mongodb.driver.cluster Checking status of 127.0.0.1:27017
+INFO  2017-01-22 22:58:44 cluster-ClusterId{value='5884c8a1de6e1020ac4b9e43', description='null'}-127.0.0.1:27017 org.mongodb.driver.cluster Monitor thread successfully connected to server with description ServerDescription{address=127.0.0.1:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[3, 2, 8]}, minWireVersion=0, maxWireVersion=4, maxDocumentSize=16777216, roundTripTimeNanos=1111305}
+DEBUG 2017-01-22 22:58:44 cluster-ClusterId{value='5884c8a1de6e1020ac4b9e43', description='null'}-127.0.0.1:27017 org.mongodb.driver.cluster Updating cluster description to  {type=STANDALONE, servers=[{address=127.0.0.1:27017, type=STANDALONE, roundTripTime=1.1 ms, state=CONNECTED}]
+INFO  2017-01-22 22:58:44 main org.mongodb.driver.connection Opened connection [connectionId{localValue:2, serverValue:11}] to 127.0.0.1:27017
+DEBUG 2017-01-22 22:58:44 main org.mongodb.driver.protocol.insert Inserting 1 documents into namespace test.person on connection [connectionId{localValue:2, serverValue:11}] to server 127.0.0.1:27017
+INFO  2017-01-22 23:13:29 main com.bow.forest.backend.dao.mongo.MongoApp test
+INFO  2017-01-22 23:13:30 main org.mongodb.driver.cluster Cluster created with settings {hosts=[127.0.0.1:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
+DEBUG 2017-01-22 23:13:30 main org.mongodb.driver.cluster Updating cluster description to  {type=UNKNOWN, servers=[{address=127.0.0.1:27017, type=UNKNOWN, state=CONNECTING}]
+DEBUG 2017-01-22 23:13:31 cluster-ClusterId{value='5884cc1ade6e102c5cfd21e4', description='null'}-127.0.0.1:27017 org.mongodb.driver.connection Closing connection connectionId{localValue:1}
+INFO  2017-01-22 23:13:31 cluster-ClusterId{value='5884cc1ade6e102c5cfd21e4', description='null'}-127.0.0.1:27017 org.mongodb.driver.cluster Exception in monitor thread while connecting to server 127.0.0.1:27017
+com.mongodb.MongoSecurityException: Exception authenticating MongoCredential{mechanism=SCRAM-SHA-1, userName='xww', source='admin', password=<hidden>, mechanismProperties={}}
+	at com.mongodb.connection.SaslAuthenticator.authenticate(SaslAuthenticator.java:61)
+	at com.mongodb.connection.InternalStreamConnectionInitializer.authenticateAll(InternalStreamConnectionInitializer.java:99)
+	at com.mongodb.connection.InternalStreamConnectionInitializer.initialize(InternalStreamConnectionInitializer.java:44)
+	at com.mongodb.connection.InternalStreamConnection.open(InternalStreamConnection.java:115)
+	at com.mongodb.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:128)
+	at java.lang.Thread.run(Thread.java:745)
+Caused by: com.mongodb.MongoCommandException: Command failed with error 18: 'Authentication failed.' on server 127.0.0.1:27017. The full response is { "ok" : 0.0, "code" : 18, "errmsg" : "Authentication failed." }
+	at com.mongodb.connection.CommandHelper.createCommandFailureException(CommandHelper.java:170)
+	at com.mongodb.connection.CommandHelper.receiveCommandResult(CommandHelper.java:123)
+	at com.mongodb.connection.CommandHelper.executeCommand(CommandHelper.java:32)
+	at com.mongodb.connection.SaslAuthenticator.sendSaslStart(SaslAuthenticator.java:95)
+	at com.mongodb.connection.SaslAuthenticator.authenticate(SaslAuthenticator.java:45)
+	... 5 more
+DEBUG 2017-01-22 23:13:31 cluster-ClusterId{value='5884cc1ade6e102c5cfd21e4', description='null'}-127.0.0.1:27017 org.mongodb.driver.cluster Updating cluster description to  {type=UNKNOWN, servers=[{address=127.0.0.1:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSecurityException: Exception authenticating MongoCredential{mechanism=SCRAM-SHA-1, userName='xww', source='admin', password=<hidden>, mechanismProperties={}}}, caused by {com.mongodb.MongoCommandException: Command failed with error 18: 'Authentication failed.' on server 127.0.0.1:27017. The full response is { "ok" : 0.0, "code" : 18, "errmsg" : "Authentication failed." }}}]
+INFO  2017-01-22 23:13:31 main org.mongodb.driver.cluster No server chosen by WritableServerSelector from cluster description ClusterDescription{type=UNKNOWN, connectionMode=SINGLE, all=[ServerDescription{address=127.0.0.1:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSecurityException: Exception authenticating MongoCredential{mechanism=SCRAM-SHA-1, userName='xww', source='admin', password=<hidden>, mechanismProperties={}}}, caused by {com.mongodb.MongoCommandException: Command failed with error 18: 'Authentication failed.' on server 127.0.0.1:27017. The full response is { "ok" : 0.0, "code" : 18, "errmsg" : "Authentication failed." }}}]}. Waiting for 30000 ms before timing out
+DEBUG 2017-01-22 23:13:31 cluster-ClusterId{value='5884cc1ade6e102c5cfd21e4', description='null'}-127.0.0.1:27017 org.mongodb.driver.connection Closing connection connectionId{localValue:2}
+DEBUG 2017-01-22 23:13:32 cluster-ClusterId{value='5884cc1ade6e102c5cfd21e4', description='null'}-127.0.0.1:27017 org.mongodb.driver.connection Closing connection connectionId{localValue:3}
+DEBUG 2017-01-22 23:13:32 cluster-ClusterId{value='5884cc1ade6e102c5cfd21e4', description='null'}-127.0.0.1:27017 org.mongodb.driver.connection Closing connection connectionId{localValue:4}
+DEBUG 2017-01-22 23:13:33 cluster-ClusterId{value='5884cc1ade6e102c5cfd21e4', description='null'}-127.0.0.1:27017 org.mongodb.driver.connection Closing connection connectionId{localValue:5}
+DEBUG 2017-01-22 23:13:33 cluster-ClusterId{value='5884cc1ade6e102c5cfd21e4', description='null'}-127.0.0.1:27017 org.mongodb.driver.connection Closing connection connectionId{localValue:6}
+DEBUG 2017-01-22 23:13:34 cluster-ClusterId{value='5884cc1ade6e102c5cfd21e4', description='null'}-127.0.0.1:27017 org.mongodb.driver.connection Closing connection connectionId{localValue:7}
+DEBUG 2017-01-22 23:13:34 cluster-ClusterId{value='5884cc1ade6e102c5cfd21e4', description='null'}-127.0.0.1:27017 org.mongodb.driver.connection Closing connection connectionId{localValue:8}
+DEBUG 2017-01-22 23:13:35 cluster-ClusterId{value='5884cc1ade6e102c5cfd21e4', description='null'}-127.0.0.1:27017 org.mongodb.driver.connection Closing connection connectionId{localValue:9}
+DEBUG 2017-01-22 23:13:35 cluster-ClusterId{value='5884cc1ade6e102c5cfd21e4', description='null'}-127.0.0.1:27017 org.mongodb.driver.connection Closing connection connectionId{localValue:10}
+DEBUG 2017-01-22 23:13:36 cluster-ClusterId{value='5884cc1ade6e102c5cfd21e4', description='null'}-127.0.0.1:27017 org.mongodb.driver.connection Closing connection connectionId{localValue:11}
+DEBUG 2017-01-22 23:13:36 cluster-ClusterId{value='5884cc1ade6e102c5cfd21e4', description='null'}-127.0.0.1:27017 org.mongodb.driver.connection Closing connection connectionId{localValue:12}
+DEBUG 2017-01-22 23:13:37 cluster-ClusterId{value='5884cc1ade6e102c5cfd21e4', description='null'}-127.0.0.1:27017 org.mongodb.driver.connection Closing connection connectionId{localValue:13}
+DEBUG 2017-01-22 23:13:37 cluster-ClusterId{value='5884cc1ade6e102c5cfd21e4', description='null'}-127.0.0.1:27017 org.mongodb.driver.connection Closing connection connectionId{localValue:14}
+DEBUG 2017-01-22 23:13:38 cluster-ClusterId{value='5884cc1ade6e102c5cfd21e4', description='null'}-127.0.0.1:27017 org.mongodb.driver.connection Closing connection connectionId{localValue:15}
+DEBUG 2017-01-22 23:13:38 cluster-ClusterId{value='5884cc1ade6e102c5cfd21e4', description='null'}-127.0.0.1:27017 org.mongodb.driver.connection Closing connection connectionId{localValue:16}
+DEBUG 2017-01-22 23:13:39 cluster-ClusterId{value='5884cc1ade6e102c5cfd21e4', description='null'}-127.0.0.1:27017 org.mongodb.driver.connection Closing connection connectionId{localValue:17}
+DEBUG 2017-01-22 23:13:39 cluster-ClusterId{value='5884cc1ade6e102c5cfd21e4', description='null'}-127.0.0.1:27017 org.mongodb.driver.connection Closing connection connectionId{localValue:18}
+DEBUG 2017-01-22 23:13:40 cluster-ClusterId{value='5884cc1ade6e102c5cfd21e4', description='null'}-127.0.0.1:27017 org.mongodb.driver.connection Closing connection connectionId{localValue:19}
+DEBUG 2017-01-22 23:13:40 cluster-ClusterId{value='5884cc1ade6e102c5cfd21e4', description='null'}-127.0.0.1:27017 org.mongodb.driver.connection Closing connection connectionId{localValue:20}
+DEBUG 2017-01-22 23:13:41 cluster-ClusterId{value='5884cc1ade6e102c5cfd21e4', description='null'}-127.0.0.1:27017 org.mongodb.driver.connection Closing connection connectionId{localValue:21}
+DEBUG 2017-01-22 23:13:42 cluster-ClusterId{value='5884cc1ade6e102c5cfd21e4', description='null'}-127.0.0.1:27017 org.mongodb.driver.connection Closing connection connectionId{localValue:22}
+DEBUG 2017-01-22 23:13:42 cluster-ClusterId{value='5884cc1ade6e102c5cfd21e4', description='null'}-127.0.0.1:27017 org.mongodb.driver.connection Closing connection connectionId{localValue:23}
+DEBUG 2017-01-22 23:13:43 cluster-ClusterId{value='5884cc1ade6e102c5cfd21e4', description='null'}-127.0.0.1:27017 org.mongodb.driver.connection Closing connection connectionId{localValue:24}
