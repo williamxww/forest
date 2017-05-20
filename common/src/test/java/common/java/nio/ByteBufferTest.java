@@ -16,6 +16,9 @@ import org.junit.Test;
 public class ByteBufferTest {
 
 
+    /**
+     * 给ByteBuffer创建子缓冲区，并使其内的元素*10
+     */
     @Test
     public void testSlice(){
         ByteBuffer buffer = ByteBuffer.allocate(10);
@@ -29,6 +32,7 @@ public class ByteBufferTest {
         ByteBuffer sliceBuffer = buffer.slice();
         for(int i=0; i< sliceBuffer.capacity(); i++){
             byte b = sliceBuffer.get(i);
+            // 子缓冲区里的数据*10
             sliceBuffer.put(i, (byte) (b*10));
         }
 
