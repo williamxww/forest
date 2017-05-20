@@ -18,6 +18,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * A processor is a thread;<br/>
+ * Each processor has it's own {@link #selector} , handle read or write event;
+ * 
  * @author vv
  * @since 2017/5/20.
  */
@@ -29,6 +32,9 @@ public class Processor extends AbstractServerThread {
 
     private RequestHandlerFactory requesthandlerFactory;
 
+    public Processor(RequestHandlerFactory requesthandlerFactory) {
+        this.requesthandlerFactory = requesthandlerFactory;
+    }
 
     @Override
     public void run() {
@@ -41,16 +47,16 @@ public class Processor extends AbstractServerThread {
                 int ready = selector.select(500);
                 if (ready <= 0)
                     continue;
-                Iterator<SelectionKey> iter = selector.selectedKeys().iterator();
-                while (iter.hasNext() && isRunning()) {
+                Iterator<SelectionKey> iterator = selector.selectedKeys().iterator();
+                while (iterator.hasNext() && isRunning()) {
                     SelectionKey key = null;
                     try {
-                        key = iter.next();
-                        iter.remove();
+                        key = iterator.next();
+                        iterator.remove();
                         if (key.isReadable()) {
                             read(key);
                         } else if (key.isWritable()) {
-//                            write(key);
+                            write(key);
                         } else if (!key.isValid()) {
                             close(key);
                         } else {
@@ -84,7 +90,7 @@ public class Processor extends AbstractServerThread {
     }
 
     /**
-     * register new connection on selector
+     * register read key on selector for new connection;
      * 
      * @throws ClosedChannelException e
      */
@@ -114,6 +120,7 @@ public class Processor extends AbstractServerThread {
         Receive request = null;
         if (key.attachment() == null) {
             request = new BoundedByteBuffer();
+            // attach request on the key, in case of can't complete reading once;
             key.attach(request);
         } else {
             request = (Receive) key.attachment();
@@ -135,6 +142,19 @@ public class Processor extends AbstractServerThread {
             key.interestOps(SelectionKey.OP_READ);
             getSelector().wakeup();
             LOGGER.trace("reading request not been done. " + request);
+        }
+    }
+
+    private void write(SelectionKey key) throws IOException {
+        Send response = (Send) key.attachment();
+        SocketChannel socketChannel = channelFor(key);
+        response.writeTo(socketChannel);
+        if (response.complete()) {
+            key.attach(null);
+            key.interestOps(SelectionKey.OP_READ);
+        } else {
+            key.interestOps(SelectionKey.OP_WRITE);
+            getSelector().wakeup();
         }
     }
 
