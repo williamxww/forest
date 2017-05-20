@@ -7,8 +7,9 @@
 
 
 ## common
-src/test/java/common    测试常用java基础技术
-src/test/java/serialize kryo序列化 
+com.bow.forest.common.mqlite    A flyweight MQ
+src/test/java/common    Java base skills
+src/test/java/serialize Kryo serialization
 
 ## backend
 测试数据库，简易中间件的相关技术
