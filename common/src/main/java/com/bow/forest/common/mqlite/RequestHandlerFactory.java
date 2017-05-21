@@ -1,6 +1,7 @@
 package com.bow.forest.common.mqlite;
 
 import com.bow.forest.common.mqlite.api.RequestKeys;
+import com.bow.forest.common.mqlite.log.LogManager;
 
 /**
  * @author vv

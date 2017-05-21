@@ -1,5 +1,7 @@
 package com.bow.forest.common.mqlite;
 
+import com.bow.forest.common.mqlite.log.LogManager;
+
 /**
  * @author vv
  * @since 2017/5/20.

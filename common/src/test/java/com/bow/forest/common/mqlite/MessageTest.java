@@ -12,8 +12,10 @@ public class MessageTest {
 
     @Test
     public void demo(){
-        Message msg = new Message("vv".getBytes());
-        System.out.println(msg);
+        System.out.println(Integer.MAX_VALUE);
+//        Message msg = new Message("vv".getBytes());
+//        System.out.println(msg);
     }
+
 
 }

@@ -2,9 +2,11 @@ package com.bow.forest.common.mqlite;
 
 import java.io.Closeable;
 import java.io.EOFException;
+import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.ReadableByteChannel;
+import java.util.Properties;
 import java.util.zip.CRC32;
 
 /**
@@ -21,6 +23,14 @@ public class Utils {
             closeable.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public static File getCanonicalFile(File f) {
+        try {
+            return f.getCanonicalFile();
+        } catch (IOException e) {
+            return f.getAbsoluteFile();
         }
     }
 
@@ -46,5 +56,41 @@ public class Utils {
         int count = channel.read(buffer);
         if (count == -1) throw new EOFException("Received -1 when reading from channel, socket has likely been closed.");
         return count;
+    }
+
+
+
+    public static String getString(Properties props, String name, String defaultValue) {
+        return props.containsKey(name) ? props.getProperty(name) : defaultValue;
+    }
+
+    public static String getString(Properties props, String name) {
+        if (props.containsKey(name)) {
+            return props.getProperty(name);
+        }
+        throw new IllegalArgumentException("Missing required property '" + name + "'");
+    }
+
+
+    public static int getInt(Properties props, String name) {
+        if (props.containsKey(name)) {
+            return getInt(props, name, -1);
+        }
+        throw new IllegalArgumentException("Missing required property '" + name + "'");
+    }
+
+    public static int getInt(Properties props, String name, int defaultValue) {
+        return getIntInRange(props, name, defaultValue, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    }
+
+    public static int getIntInRange(Properties props, String name, int defaultValue, int min, int max) {
+        int v = defaultValue;
+        if (props.containsKey(name)) {
+            v = Integer.valueOf(props.getProperty(name));
+        }
+        if (v >= min && v <= max) {
+            return v;
+        }
+        throw new IllegalArgumentException(name + " has value " + v + " which is not in the range");
     }
 }

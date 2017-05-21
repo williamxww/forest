@@ -1,4 +1,6 @@
-package com.bow.forest.common.mqlite;
+package com.bow.forest.common.mqlite.log;
+
+import com.bow.forest.common.mqlite.Utils;
 
 import java.nio.ByteBuffer;
 
@@ -42,11 +44,16 @@ public class Message {
 
     private final ByteBuffer buffer;
 
-    private int payloadSize;
+    private int messageSize;
+
+    public Message(ByteBuffer buffer) {
+        this.buffer = buffer;
+        this.messageSize = buffer.limit();
+    }
 
     public Message(byte[] bytes) {
-        this.payloadSize = bytes.length;
-        this.buffer = ByteBuffer.allocate(payloadSize + PAYLOAD_OFFSET);
+        this.messageSize = bytes.length + PAYLOAD_OFFSET;
+        this.buffer = ByteBuffer.allocate(messageSize);
 
         // MAGIC
         buffer.putShort(MAGIC);
@@ -65,7 +72,7 @@ public class Message {
         ByteBuffer payload = buffer.duplicate();
         payload.position(PAYLOAD_OFFSET);
         payload = payload.slice();
-        payload.limit(payloadSize);
+        payload.limit(messageSize - PAYLOAD_OFFSET);
         payload.rewind();
         return payload;
     }

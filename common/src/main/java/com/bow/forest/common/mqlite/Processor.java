@@ -138,7 +138,7 @@ public class Processor extends AbstractServerThread {
                 key.interestOps(SelectionKey.OP_WRITE);
             }
         } else {
-            // more reading to be done
+            // more reading
             key.interestOps(SelectionKey.OP_READ);
             getSelector().wakeup();
             LOGGER.trace("reading request not been done. " + request);
