@@ -1,10 +1,15 @@
 package com.bow.forest.common.mqlite;
 
+import com.bow.forest.common.mqlite.log.KV;
+
 import java.io.Closeable;
 import java.io.EOFException;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 import java.nio.channels.ReadableByteChannel;
 import java.util.Properties;
 import java.util.zip.CRC32;
@@ -35,6 +40,20 @@ public class Utils {
     }
 
     /**
+     *
+     * @param file
+     * @param mutable 可修改的
+     * @return
+     * @throws IOException
+     */
+    public static FileChannel openChannel(File file, boolean mutable) throws IOException {
+        if (mutable) {
+            return new RandomAccessFile(file, "rw").getChannel();
+        }
+        return new FileInputStream(file).getChannel();
+    }
+
+    /**
      * calculate the CRC-32 checksum with the specified array of bytes.
      * 
      * @param bytes the array of bytes to calculate the checksum with
@@ -54,11 +73,10 @@ public class Utils {
 
     public static int read(ReadableByteChannel channel, ByteBuffer buffer) throws IOException {
         int count = channel.read(buffer);
-        if (count == -1) throw new EOFException("Received -1 when reading from channel, socket has likely been closed.");
+        if (count == -1)
+            throw new EOFException("Received -1 when reading from channel, socket has likely been closed.");
         return count;
     }
-
-
 
     public static String getString(Properties props, String name, String defaultValue) {
         return props.containsKey(name) ? props.getProperty(name) : defaultValue;
@@ -70,7 +88,6 @@ public class Utils {
         }
         throw new IllegalArgumentException("Missing required property '" + name + "'");
     }
-
 
     public static int getInt(Properties props, String name) {
         if (props.containsKey(name)) {
@@ -92,5 +109,11 @@ public class Utils {
             return v;
         }
         throw new IllegalArgumentException(name + " has value " + v + " which is not in the range");
+    }
+
+    public static KV<String, Integer> getTopicPartition(String topicPartition) {
+        int index = topicPartition.lastIndexOf('-');
+        return new KV<String, Integer>(topicPartition.substring(0, index), //
+                Integer.valueOf(topicPartition.substring(index + 1)));
     }
 }

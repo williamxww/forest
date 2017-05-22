@@ -37,4 +37,12 @@ public class ServerConfig {
     public int getLogRetentionHours() {
         return getIntInRange(props, "log.retention.hours", 24 * 7, 1, Integer.MAX_VALUE);
     }
+
+    public int getLogFileSize() {
+        return getInt(props, "log.file.size", 1 * 1024 * 1024 * 1024);
+    }
+
+    public int getFlushInterval() {
+        return getIntInRange(props, "log.flush.interval", 500, 1, Integer.MAX_VALUE);
+    }
 }

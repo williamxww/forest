@@ -7,7 +7,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Map;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 /**
  * @author vv
@@ -21,16 +22,19 @@ public class LogManager {
 
     final File logDir;
 
+    final int flushInterval;
+
     private RollingStrategy rollingStrategy;
 
-    // private final Map<String, Integer> topicPartitionsMap;
-
     final int numPartitions;
+
+    private final ConcurrentMap<String, ConcurrentMap<Integer, Log>> logs = new ConcurrentSkipListMap();
 
     public LogManager(ServerConfig config) {
         this.config = config;
         this.numPartitions = config.getNumPartitions();
         this.logDir = Utils.getCanonicalFile(new File(config.getLogDir()));
+        this.flushInterval = config.getFlushInterval();
     }
 
     public void load() throws IOException {
@@ -57,44 +61,17 @@ public class LogManager {
                     final KV<String, Integer> topicPartion = Utils.getTopicPartition(topicNameAndPartition);
                     final String topic = topicPartion.k;
                     final int partition = topicPartion.v;
-                    Log log = new Log(dir, partition, this.rollingStategy, flushInterval, needRecovery, maxMessageSize);
+                    Log log = new Log(dir, partition, this.rollingStrategy, flushInterval);
 
-                    logs.putIfNotExists(topic, new Pool<Integer, Log>());
-                    Pool<Integer, Log> parts = logs.get(topic);
+                    logs.putIfAbsent(topic, new ConcurrentSkipListMap<Integer, Log>());
+                    ConcurrentMap<Integer, Log> parts = logs.get(topic);
 
                     parts.put(partition, log);
-                    int configPartition = getPartition(topic);
-                    if (configPartition <= partition) {
-                        topicPartitionsMap.put(topic, partition + 1);
-                    }
                 }
             }
         }
 
-        /* Schedule the cleanup task to delete old logs */
-        if (this.scheduler != null) {
-            logger.debug("starting log cleaner every " + logCleanupIntervalMs + " ms");
-            this.scheduler.scheduleWithRate(new Runnable() {
 
-                public void run() {
-                    try {
-                        cleanupLogs();
-                    } catch (IOException e) {
-                        logger.error("cleanup log failed.", e);
-                    }
-                }
-
-            }, 60 * 1000, logCleanupIntervalMs);
-        }
-        //
-        if (config.getEnableZookeeper()) {
-            this.serverRegister = new ServerRegister(config, this);
-            serverRegister.startup();
-            TopicRegisterTask task = new TopicRegisterTask();
-            task.setName("jafka.topicregister");
-            task.setDaemon(true);
-            task.start();
-        }
     }
 
     public void setRollingStrategy(RollingStrategy rollingStrategy) {
