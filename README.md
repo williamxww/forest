@@ -7,9 +7,11 @@
 
 
 ## common
-com.bow.forest.common.mqlite    A flyweight MQ
-src/test/java/common    Java base skills
-src/test/java/serialize Kryo serialization
+com.bow.forest.common.mqlite    A flyweight MQ <br/>
+src/test/java/common    Java base skills <br/>
+src/test/java/common/java/io BIO NIO AIO<br/>
+src/test/java/serialize Kryo serialization <br/>
+
 
 ## backend
 测试数据库，简易中间件的相关技术
