@@ -1,4 +1,4 @@
-package common.java.nio.netty.halfpackage;
+package common.java.io.nio.netty.halfpackage;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;

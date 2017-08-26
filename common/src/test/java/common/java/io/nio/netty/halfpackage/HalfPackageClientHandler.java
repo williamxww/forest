@@ -1,4 +1,4 @@
-package common.java.nio.netty.halfpackage;
+package common.java.io.nio.netty.halfpackage;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;

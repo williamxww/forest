@@ -1,4 +1,4 @@
-package common.java.nio.netty;
+package common.java.io.nio.netty;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URI;

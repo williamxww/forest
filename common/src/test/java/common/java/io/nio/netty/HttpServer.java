@@ -1,4 +1,4 @@
-package common.java.nio.netty;
+package common.java.io.nio.netty;
 
 
 import io.netty.bootstrap.ServerBootstrap;

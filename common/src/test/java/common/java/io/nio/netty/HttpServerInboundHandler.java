@@ -1,4 +1,4 @@
-package common.java.nio.netty;
+package common.java.io.nio.netty;
 
 import static io.netty.handler.codec.http.HttpHeaders.Names.CONNECTION;
 import static io.netty.handler.codec.http.HttpHeaders.Names.CONTENT_LENGTH;
