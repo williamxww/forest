@@ -4,7 +4,7 @@
  * all rights reserved by Hill team
  * @version v1.3  
  */ 
-package common.db;
+package common.java.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
