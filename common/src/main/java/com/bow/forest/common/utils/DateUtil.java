@@ -1,269 +1,346 @@
 package com.bow.forest.common.utils;
 
-import java.sql.Timestamp;
-import java.text.DateFormat;
+import java.security.InvalidParameterException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 import java.util.TimeZone;
 
+import org.apache.commons.lang3.time.DateUtils;
+
 /**
- * @author vv
- * @since 2016/9/17.
+ * 日志工具
+ * 
+ * @author wwxiang
+ * @since 2016/9/13.
  */
 public class DateUtil {
 
-    private static final int ONE_MINUTE = 60;
+	/**
+	 * 日期格式：yyyy-MM-dd
+	 */
+	public static final String NORMAL_DATE_FORMAT = "yyyy-MM-dd";
+	/**
+	 * 日期格式：yyyy-MM-dd
+	 */
+	public static final String COMPACT_DATE_FORMAT = "yyyyMMdd";
+	/**
+	 * 日期格式：yyyy-MM-dd hh:mm:ss
+	 */
+	public static final String DATE_TIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
+	/**
+	 * 一天的毫秒数
+	 */
+	private static final long DAY_IN_MILLIS = 86400000L;
 
-    private static final int ONE_THOUSAND = 1000;
+	/**
+	 * 构造方法私有
+	 */
+	private DateUtil() {
 
-    private static final int ONE_HOUR = 60;
+	}
 
-    private static int beginDay = 1;
+	/**
+	 * 字符串解析为Date
+	 * 
+	 * @param dateStr dateStr
+	 * @param formatPattern 格式
+	 * @return Date
+	 */
+	public static Date parse(String dateStr, String formatPattern) {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(formatPattern);
+		Date date;
+		try {
+			date = simpleDateFormat.parse(dateStr);
+		} catch (ParseException e) {
+			throw new IllegalArgumentException("invalid param " + dateStr + "," + formatPattern);
+		}
+		return date;
+	}
 
-    public static final int YEAR = 0;
+	/**
+	 * Date转换为字符串
+	 * 
+	 * @param date 日期
+	 * @param formatPattern 格式化样本
+	 * @return String
+	 */
+	public static String format(Date date, String formatPattern) {
+		if (date == null) {
+			return null;
+		}
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(formatPattern);
+		return simpleDateFormat.format(date);
+	}
 
-    public static final int MONTH = 1;
+	/**
+	 * 增加时间
+	 * 
+	 * @param begin 开始时间
+	 * @param amount 增加数量
+	 * @param calendarField 增加数量对应的单位，常用单位如下
+	 * @see Calendar#YEAR
+	 * @see Calendar#MONTH
+	 * @see Calendar#WEEK_OF_YEAR
+	 * @see Calendar#DATE
+	 * @see Calendar#HOUR
+	 * @see Calendar#HOUR_OF_DAY
+	 * @see Calendar#MINUTE
+	 * @see Calendar#SECOND
+	 * @see Calendar#MILLISECOND
+	 * @return Date
+	 */
+	public static Date add(Date begin, int amount, int calendarField) {
+		if (begin == null) {
+			throw new IllegalArgumentException("The date must not be null");
+		} else {
+			Calendar c = Calendar.getInstance();
+			c.setTime(begin);
+			c.add(calendarField, amount);
+			return c.getTime();
+		}
+	}
 
-    public static final int WEEK = 2;
+	/**
+	 * 获取指定的最早时间
+	 * 
+	 * @param year 年
+	 * @param month 月
+	 * @param day 日
+	 * @param time 时分秒
+	 * @return 日期
+	 */
+	public static Date getSpecificDate(int year, int month, int day, int... time) {
+		Calendar calendar = Calendar.getInstance();
+		// 参数不符合常规，直接报错,如13月32日
+		calendar.setLenient(false);
+		List<Integer> types = new ArrayList<Integer>();
+		types.add(Calendar.YEAR);
+		types.add(Calendar.MONTH);
+		types.add(Calendar.DAY_OF_MONTH);
+		types.add(Calendar.HOUR_OF_DAY);
+		types.add(Calendar.MINUTE);
+		types.add(Calendar.SECOND);
+		types.add(Calendar.MILLISECOND);
+		calendar.set(types.get(0), year);
+		calendar.set(types.get(1), month - 1);
+		calendar.set(types.get(2), day);
+		calendar.set(types.get(3), 0);
+		calendar.set(types.get(4), 0);
+		calendar.set(types.get(5), 0);
+		calendar.set(types.get(6), 0);
 
-    public static final int DAY = 3;
+		if (time != null) {
+			if (time.length > 4) {
+				throw new UnsupportedOperationException("unsupported specify time less than millis");
+			}
+			int i = 3;
+			for (int t : time) {
+				calendar.set(types.get(i), t);
+				i++;
+			}
+		}
+		return calendar.getTime();
+	}
 
-    public static final int HOUR = 4;
+	/**
+	 * 获取今天的日期，没有时分秒
+	 * 
+	 * @return 今天的日期
+	 */
+	public static Date getToday() {
+		return truncate(new Date(), Calendar.DAY_OF_MONTH);
+	}
 
-    public static final int MINUTE = 5;
+	/**
+	 * 截取到指定的日期
+	 * 
+	 * @param date date
+	 * @param field 截取到日 小时 or分钟
+	 * @return 日期
+	 */
+	public static Date truncate(Date date, int field) {
+		return DateUtils.truncate(date, field);
+	}
 
-    public static final int SECOND = 6;
+	/**
+	 * 比较date1 date2
+	 * 
+	 * @param date1 date1
+	 * @param date2 date2
+	 * @return 1表示date1gt;date2 -1表示date1lt;date2 0表示date1eq;date2
+	 */
+	public static int compareTo(Date date1, Date date2) {
+		if (date1 == null || date2 == null) {
+			throw new InvalidParameterException("parameter must not be null");
+		}
+		return date1.compareTo(date2);
+	}
 
-    public static final int MILLISECOND = 7;
+	/**
+	 * 比较日期大小，精确度由type决定
+	 * 
+	 * @param date1 date1
+	 * @param date2 date2
+	 * @param field 精确度类型，如 日 时 分
+	 * @return 1 date1 &gt; date2
+	 */
+	public static int truncatedCompareTo(Date date1, Date date2, int field) {
+		return DateUtils.truncatedCompareTo(date1, date2, field);
+	}
 
-    public static final int MINUTEOFDAY = 8;
-    public final static String DATE_FORMAT_14 = "yyyyMMddHHmmss";
-    public final static String DATE_FORMAT_NEW_14 = "yyyy-MM-dd HH:mm:ss";
+	/**
+	 * 相差1天为 间隔时间 大于等于24h 小于48h
+	 * 
+	 * @param date1 date1
+	 * @param date2 date2
+	 * @return 相差的天数
+	 */
+	public static int intervalDays(Date date1, Date date2) {
+		Date tmp;
+		if (date1.compareTo(date2) < 0) {
+			tmp = date2;
+			date2 = date1;
+			date1 = tmp;
+		}
+		return (int) ((date1.getTime() - date2.getTime()) / DAY_IN_MILLIS);
+	}
 
-    public static final String DEFAULT_FORMAT = "yyyyMMddHHmmss"; // 缺省的日期字符串格式
+	/**
+	 * 根据时区转换日期时间
+	 * 
+	 * @param srcDate 源日期
+	 * @param srcTz 源时区
+	 * @param desTz 目标时区
+	 * @return 目标日期
+	 */
+	public static Date transDateByTz(Date srcDate, TimeZone srcTz, TimeZone desTz) {
+		if (srcDate != null && srcTz != null && !srcTz.equals(desTz)) {
+			int srcOffset = srcTz.getRawOffset();
+			int desOffset = desTz.getRawOffset();
+			int offset = desOffset - srcOffset;
+			return new Date(srcDate.getTime() + offset);
+		} else {
+			return srcDate;
+		}
+	}
 
-    /**
-     * 时间格式 : yyyy.MM.dd HH:mm
-     */
-    public final static String DATE_FORMAT_24HOUR_12 = "yyyy.MM.dd HH:mm";
+	/**
+	 * 获取月的第一天
+	 * 
+	 * @param year year
+	 * @param month month
+	 * @return Date
+	 */
+	public static Date getFirstDayOfMonth(int year, int month) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setLenient(false);
+		calendar.set(Calendar.YEAR, year);
+		calendar.set(Calendar.MONTH, month - 1);
+		calendar.set(Calendar.DAY_OF_MONTH, 1);
+		return truncate(calendar.getTime(), Calendar.DATE);
+	}
 
-    /**
-     * 时间格式 : yyyyMMdd
-     */
-    public final static String DATE_FORMAT_8 = "yyyyMMdd";
+	/**
+	 * 获取月最后一天
+	 * 
+	 * @param year year
+	 * @param month month
+	 * @return Date
+	 */
+	public static Date getLastDayOfMonth(int year, int month) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setLenient(false);
+		calendar.set(Calendar.YEAR, year);
+		calendar.set(Calendar.MONTH, month - 1);
+		calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+		return truncate(calendar.getTime(), Calendar.DATE);
+	}
 
-    public static final Map<Integer, Integer> CALENDAR_MAP;
+	/**
+	 * get First Day Of Year
+	 * 
+	 * @param year year
+	 * @return Date
+	 */
+	public static Date getFirstDayOfYear(int year) {
+		Calendar calendar = Calendar.getInstance();
+		// calendar.setLenient(false);
+		calendar.set(Calendar.YEAR, year);
+		return truncate(calendar.getTime(), Calendar.YEAR);
+	}
 
-    static {
-        CALENDAR_MAP = new HashMap<Integer, Integer>();
-        CALENDAR_MAP.put(YEAR, Calendar.YEAR);
-        CALENDAR_MAP.put(MONTH, Calendar.MONTH);
-        CALENDAR_MAP.put(WEEK, Calendar.DAY_OF_WEEK);
-        CALENDAR_MAP.put(DAY, Calendar.DAY_OF_MONTH);
-        CALENDAR_MAP.put(HOUR, Calendar.HOUR);
-        CALENDAR_MAP.put(MINUTE, Calendar.MINUTE);
-        CALENDAR_MAP.put(SECOND, Calendar.SECOND);
-        CALENDAR_MAP.put(MILLISECOND, Calendar.MILLISECOND);
-    }
+	/**
+	 * get Last Day Of Year
+	 * 
+	 * @param year year
+	 * @return Date
+	 */
+	public static Date getLastDayOfYear(int year) {
+		return getLastDayOfMonth(year, 12);
+	}
 
-    /**
-     * 千万别忘了
-     */
-    private DateUtil() {
+	/**
+	 * 获取指定日期的年
+	 * 
+	 * @param date date
+	 * @return 年
+	 */
+	public static int getYear(Date date) {
+		return getField(date, Calendar.YEAR);
+	}
 
-    }
+	/**
+	 * 获取指定日期的月
+	 * 
+	 * @param date date
+	 * @return 月
+	 */
+	public static int getMonth(Date date) {
+		return getField(date, Calendar.MONTH) + 1;
+	}
 
-    public static String getCurrentTime(String pattern) {
-        return format(new Date(),pattern);
-    }
+	/**
+	 * 获取指定日期的周 WEEK_OF_YEAR
+	 * 
+	 * @param date date
+	 * @return WEEK_OF_YEAR
+	 */
+	public static int getWeekOfYear(Date date) {
+		return getField(date, Calendar.WEEK_OF_YEAR);
+	}
 
-    /**
-     * 把字符串格式化日期
-     */
-    public static Date parse(String dateStr, String formater) {
-        formater = (null == formater) ? "yyyy-MM-dd HH:mm:ss" : formater;
-        DateFormat formatter = new SimpleDateFormat(formater);
-        Date date = null;
-        try {
-            date = formatter.parse(dateStr);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return date;
-    }
+	/**
+	 * 获取日期，指定字段的值
+	 * 
+	 * @param date date
+	 * @param field 指定字段名称，如年，月，日
+	 * @see Calendar#YEAR
+	 * @return 指定字段的值
+	 */
+	public static int getField(Date date, int field) {
+		if (null == date) {
+			date = new Date();
+		}
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		return calendar.get(field);
+	}
 
-    /**
-     * 格式化日期
-     */
-    public static String format(Date date, String formatStr) {
-        if (date == null) {
-            return null;
-        }
-
-        SimpleDateFormat sf = new SimpleDateFormat(formatStr);
-        return sf.format(date);
-    }
-
-    /**
-     * 指定时间，如指定到天就获取的是当天最早的时间
-     * @param params
-     * @return
-     */
-    public static Date getSpecifiedTime(int... params){
-        Calendar c = Calendar.getInstance();
-        return c.getTime();
-    }
-
-
-
-
-    /**
-     * 获取当天结束时间
-     *
-     * @param date
-     * @return Timestamp [返回类型说明]
-     * @throws throws [违例类型] [违例说明]
-     * @see [类、类#方法、类#成员]
-     */
-    public static Timestamp getEndDate(Date date) {
-        Calendar c = Calendar.getInstance();
-        c.setTime(date);
-        c.set(Calendar.HOUR_OF_DAY, 23);
-        c.set(Calendar.MINUTE, 59);
-        c.set(Calendar.SECOND, 59);
-        c.set(Calendar.MILLISECOND, 999);
-
-        return new Timestamp(c.getTimeInMillis());
-    }
-
-    /**
-     * 某个时间是否在两个时间段之间
-     */
-    public static boolean isBetweenTime(Timestamp begintime, Timestamp endtime,
-                                        Timestamp nowTimes) {
-        boolean flag = (nowTimes.compareTo(begintime) != -1 && nowTimes.compareTo(endtime) != 1);
-        if (flag) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public static enum CompareDateFormate {
-        year, month, day, hour, minute, second,
-
-        yyyyMMddhhmmss, yyyyMMddhhmm, yyyyMMddhh, yyyyMMdd, yyyyMM,
-
-        MMddhhmmss, MMddhhmm, MMddhh, MMdd, ddhhmmss, ddhhmm, ddhh, hhmmss, hhmm, mmss
-    }
-
-    private final static HashMap<CompareDateFormate, int[]> map =
-            new HashMap<CompareDateFormate, int[]>();
-
-    static {
-        map.put(CompareDateFormate.year, new int[]{Calendar.YEAR});
-        map.put(CompareDateFormate.month, new int[]{Calendar.MONTH});
-        map.put(CompareDateFormate.day, new int[]{Calendar.DATE});
-        map.put(CompareDateFormate.hour, new int[]{Calendar.HOUR_OF_DAY});
-        map.put(CompareDateFormate.minute, new int[]{Calendar.MINUTE});
-        map.put(CompareDateFormate.second, new int[]{Calendar.SECOND});
-
-        map.put(CompareDateFormate.yyyyMMddhhmmss, new int[]{Calendar.YEAR,
-                Calendar.MONTH, Calendar.DATE, Calendar.HOUR_OF_DAY,
-                Calendar.MINUTE, Calendar.SECOND});
-        map.put(CompareDateFormate.yyyyMMddhhmm, new int[]{Calendar.YEAR,
-                Calendar.MONTH, Calendar.DATE, Calendar.HOUR_OF_DAY,
-                Calendar.MINUTE});
-        map.put(CompareDateFormate.yyyyMMddhh, new int[]{Calendar.YEAR,
-                Calendar.MONTH, Calendar.DATE, Calendar.HOUR_OF_DAY});
-        map.put(CompareDateFormate.yyyyMMdd, new int[]{Calendar.YEAR,
-                Calendar.MONTH, Calendar.DATE});
-        map.put(CompareDateFormate.yyyyMM, new int[]{Calendar.YEAR,
-                Calendar.MONTH});
-
-        map.put(CompareDateFormate.MMddhhmmss, new int[]{Calendar.MONTH,
-                Calendar.DATE, Calendar.HOUR_OF_DAY, Calendar.MINUTE,
-                Calendar.SECOND});
-        map.put(CompareDateFormate.MMddhhmm, new int[]{Calendar.MONTH,
-                Calendar.DATE, Calendar.HOUR_OF_DAY, Calendar.MINUTE});
-        map.put(CompareDateFormate.MMddhh, new int[]{Calendar.MONTH,
-                Calendar.DATE, Calendar.HOUR_OF_DAY});
-        map.put(CompareDateFormate.MMdd, new int[]{Calendar.MONTH,
-                Calendar.DATE});
-
-        map.put(CompareDateFormate.ddhhmmss, new int[]{Calendar.DATE,
-                Calendar.HOUR_OF_DAY, Calendar.MINUTE, Calendar.SECOND});
-        map.put(CompareDateFormate.ddhhmm, new int[]{Calendar.DATE,
-                Calendar.HOUR_OF_DAY, Calendar.MINUTE});
-        map.put(CompareDateFormate.ddhh, new int[]{Calendar.DATE,
-                Calendar.HOUR_OF_DAY});
-
-        map.put(CompareDateFormate.hhmmss, new int[]{Calendar.HOUR_OF_DAY,
-                Calendar.MINUTE, Calendar.SECOND});
-        map.put(CompareDateFormate.hhmm, new int[]{Calendar.HOUR_OF_DAY,
-                Calendar.MINUTE});
-        map.put(CompareDateFormate.mmss, new int[]{Calendar.MINUTE,
-                Calendar.SECOND});
-    }
-
-    /**
-     * 根据CompareFields的格式（如只比较年月）比较两个日期先后，
-     * <p>
-     * 在比较字段内，若返回1，表示date1在date2之后，返回-1，表示date1在date2之前，0表示两者相等
-     */
-    public static int compare(Date date1, Date date2, CompareDateFormate cdf) {
-        Calendar c1 = Calendar.getInstance();
-        c1.setTime(date1);
-        Calendar c2 = Calendar.getInstance();
-        c2.setTime(date2);
-
-        int[] form = map.get(cdf);
-        for (int field : form) {
-            int t1 = c1.get(field);
-            int t2 = c2.get(field);
-            if (t1 > t2) {
-                return 1;
-            } else if (t1 < t2) {
-                return -1;
-            }
-        }
-
-        return 0;
-    }
-
-
-    /**
-     * 获得东八时区的日历，并设置日历的当前日期 参数：date，Date，日期型
-     */
-    public static Calendar getLocalCalendar(Date date) {
-        // 设置为GMT+08:00时区
-        String[] ids =
-                TimeZone.getAvailableIDs(8 * ONE_HOUR * ONE_MINUTE * ONE_THOUSAND);
-        if (0 == ids.length) {
-            throw new IllegalArgumentException(
-                    "get id of GMT+08:00 time zone failed");
-        }
-        // 创建Calendar对象，并设置为指定时间
-        Calendar calendar = new GregorianCalendar(TimeZone.getDefault());
-
-        // 设置成宽容方式
-        if (!calendar.isLenient()) {
-            calendar.setLenient(true);
-        }
-        // 设置SUNDAY为每周的第一天
-        calendar.setFirstDayOfWeek(Calendar.SUNDAY);
-
-        // 设置日历的当前时间
-        calendar.setTime(date);
-        return calendar;
-    }
-
-
-
+	/**
+	 * 是否为闰年 四年一闰年，一般百年不是但400年是
+	 * 
+	 * @param year year
+	 * @return boolean
+	 */
+	public static boolean isLeapYear(int year) {
+		if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0) {
+			return true;
+		}
+		return false;
+	}
 
 }
