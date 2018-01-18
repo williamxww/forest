@@ -265,21 +265,7 @@ public class StringUtil {
 		return StringUtils.rightPad(str, size, padChar);
 	}
 
-	/**
-	 * 根据params替换strMsg的${key}
-	 * 
-	 * @param strMsg original String
-	 * @param params context Map
-	 * @return 返回替换后的字符串
-	 */
-	public static String replaceParams(String strMsg, Map<String, Object> params) {
-		if (MapUtil.isNotEmpty(params)) {
-			for (String strKey : params.keySet()) {
-				strMsg = replaceAll(strMsg, "${" + strKey + "}", replaceNull(params.get(strKey)));
-			}
-		}
-		return strMsg;
-	}
+
 
 	/**
 	 * 重构字符串，如果为null，返回空串

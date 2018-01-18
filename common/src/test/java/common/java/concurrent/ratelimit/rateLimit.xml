@@ -1,0 +1,3 @@
+<rateLimit>
+    <limit interface="com.bow.service.HelloService" method="say" paramNames="userId, area" >10</limit>
+</rateLimit>
