@@ -1,3 +1,0 @@
-<rateLimit>
-    <limit interfaceName="com.bow.service.HelloService" methodName="say" paramIndex="1,2"  value="10"/>
-</rateLimit>
