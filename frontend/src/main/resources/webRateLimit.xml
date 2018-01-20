@@ -1,0 +1,4 @@
+<rateLimit>
+    <limit url="/user/addUser"   tps="1"/>
+    <limit url="/activity/bonus"  params="userId,ip"  tps="1"/>
+</rateLimit>
