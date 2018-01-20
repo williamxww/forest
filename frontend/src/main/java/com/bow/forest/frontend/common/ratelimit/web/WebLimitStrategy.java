@@ -39,7 +39,7 @@ public class WebLimitStrategy implements LimitStrategy {
         // 构造限流器的元信息
         LimitMetaData meta = new LimitMetaData();
         meta.setLimitName(limitName.toString());
-        meta.setValue(limitInfo.getTps());
+        meta.setTps(limitInfo.getTps());
         return meta;
     }
 

@@ -53,7 +53,7 @@ public class ConcurrentLimit {
             synchronized (this) {
                 limiter = limiterMap.get(key);
                 if (limiter == null) {
-                    limiter = RateLimiter.create(meta.getValue());
+                    limiter = RateLimiter.create(meta.getTps());
                     limiterMap.put(key, limiter);
                 }
             }

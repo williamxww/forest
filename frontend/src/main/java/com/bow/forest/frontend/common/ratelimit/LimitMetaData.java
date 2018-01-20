@@ -16,7 +16,7 @@ public class LimitMetaData {
     /**
      * tps
      */
-    private int value;
+    private int tps;
 
     public String getLimitName() {
         return limitName;
@@ -26,11 +26,11 @@ public class LimitMetaData {
         this.limitName = limitName;
     }
 
-    public int getValue() {
-        return value;
+    public int getTps() {
+        return tps;
     }
 
-    public void setValue(int value) {
-        this.value = value;
+    public void setTps(int tps) {
+        this.tps = tps;
     }
 }
