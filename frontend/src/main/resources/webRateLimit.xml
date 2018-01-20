@@ -1,4 +1,5 @@
 <rateLimit>
     <limit url="/user/addUser"   tps="1"/>
+    <!-- 每个用户@ip的tps限制为1 -->
     <limit url="/activity/bonus"  params="userId,ip"  tps="1"/>
 </rateLimit>

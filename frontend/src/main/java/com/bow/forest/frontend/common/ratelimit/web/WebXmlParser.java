@@ -22,6 +22,8 @@ import com.bow.forest.common.utils.StringUtil;
  */
 public class WebXmlParser {
 
+    private static final String LIMIT = "limit";
+
     private static final String URL = "url";
 
     private static final String PARAMS = "params";
@@ -53,8 +55,8 @@ public class WebXmlParser {
         List<WebLimitInfo> result = new ArrayList();
         for (int i = 0; i < limits.getLength(); i++) {
             Node limitNode = limits.item(i);
-            if (limitNode.getNodeType() != Element.ELEMENT_NODE) {
-                // 说明不是元素节点不处理
+            if (limitNode.getNodeType() != Element.ELEMENT_NODE || !LIMIT.equals(limitNode.getNodeName())) {
+                // 说明不是LIMIT元素节点不处理
                 continue;
             }
             WebLimitInfo obj = new WebLimitInfo();
