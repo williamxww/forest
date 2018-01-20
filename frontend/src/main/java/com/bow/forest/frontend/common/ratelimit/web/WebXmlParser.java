@@ -26,7 +26,7 @@ public class WebXmlParser {
 
     private static final String PARAMS = "params";
 
-    private static final String VALUE = "value";
+    private static final String TPS = "tps";
 
     private Map<String, WebLimitInfo> limitMap = new ConcurrentHashMap();
 
@@ -64,7 +64,7 @@ public class WebXmlParser {
                 String[] params = StringUtil.split(paramStr, ",");
                 obj.setParams(params);
             }
-            int value = StringUtil.toInt(getAttr(limitNode, VALUE), 0);
+            int value = StringUtil.toInt(getAttr(limitNode, TPS), 0);
             obj.setTps(value);
             result.add(obj);
         }
