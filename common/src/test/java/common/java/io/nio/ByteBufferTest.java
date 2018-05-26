@@ -44,6 +44,36 @@ public class ByteBufferTest {
     }
 
     /**
+     * 原缓冲元素发生变化，视图缓冲中也会变化
+     */
+    @Test
+    public void testSlice2(){
+        ByteBuffer buffer = ByteBuffer.allocate(10);
+        for(int i=0; i<buffer.capacity(); i++){
+            buffer.put((byte)i);
+        }
+
+        //创建子缓冲区
+        buffer.position(2);
+        buffer.limit(4);
+        ByteBuffer sliceBuffer = buffer.slice();
+
+        // 原缓冲恢复原状
+        buffer.rewind();
+        buffer.limit(buffer.capacity());
+        // 原缓冲区里的数据*10
+        for(int i=0; i< buffer.capacity(); i++){
+            byte b = buffer.get(i);
+            buffer.put(i, (byte) (b*10));
+        }
+
+        // 输出slice缓冲
+        while(sliceBuffer.remaining()>0){
+            System.out.println(sliceBuffer.get());
+        }
+    }
+
+    /**
      * 原缓冲区的内容发生改变，readOnlyBuffer也会随之改变(视图缓冲区)
      */
     @Test
