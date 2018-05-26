@@ -1,0 +1,36 @@
+package common.java.jndi;
+
+import java.io.Serializable;
+import java.rmi.Remote;
+
+/**
+ * Created by vv on 2016/8/27.
+ */
+public class Person implements Remote,Serializable {
+    private String name;
+    private int age;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                '}';
+    }
+}

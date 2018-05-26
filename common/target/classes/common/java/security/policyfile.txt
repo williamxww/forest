@@ -1,0 +1,3 @@
+grant codeBase "file:///D:/work/hill/src/test/java/common/java/security/" {
+	permission java.io.FilePermission "D:/work/hill/src/test/java/common/java/security/*" , "read" ;
+};
